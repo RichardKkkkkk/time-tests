@@ -1,3 +1,4 @@
+import pytest
 from times import compute_overlap_time, time_range
 
 def test_generic_case():
@@ -23,6 +24,10 @@ def test_sameEnd_otherStart():
     second = time_range("2010-01-12 12:00:00", "2010-01-12 13:00:00", 2, 60)
     expected = []
     assert compute_overlap_time(first, second) == expected
+
+def test_time_range_backwards_error():
+    with pytest.raises(ValueError, match="end_time must be after start_time"):
+        time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
 
 
     
